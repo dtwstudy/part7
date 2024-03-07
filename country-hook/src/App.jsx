@@ -17,8 +17,36 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
+  name = name ? name.toLowerCase() : name = ''
 
-  useEffect(() => {})
+  useEffect(() => {
+    axios.get('https://studies.cs.helsinki.fi/restcountries/api/all').then(res => {
+
+      let item = res.data.find(country => (country.name.common.toLowerCase() == name))
+     
+      if (item !== undefined) {
+        
+        setCountry({
+          data: {
+
+            name: item.name.common,
+            capital: item.capital,
+            population: item.population,
+            flag: item.flags.png,
+
+
+          }, found: true
+        })
+      }
+      else {
+        setCountry({})
+      }
+
+
+
+    })
+  })
+
 
   return country
 }
@@ -40,8 +68,8 @@ const Country = ({ country }) => {
     <div>
       <h3>{country.data.name} </h3>
       <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
+      <div>population {country.data.population}</div>
+      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`} />
     </div>
   )
 }
