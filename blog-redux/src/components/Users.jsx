@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 import userService from '../services/users'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+  useNavigate,
+} from 'react-router-dom'
 
-const DetailsView = (users) => {
+const User = ({ user }) => {
   return (
-    <>
-    added blogs
-
-    </>
-  )
-}
-const User = ({user}) => {
-  return (
-    <li> {user.username}  blog created {user.blogs.length}</li>
+    <li>
+      {' '}
+      <Link to={`/view/${user.id}`}>{user.username}</Link> blog created {user.blogs.length}
+    </li>
   )
 }
 const Users = () => {
@@ -25,7 +28,9 @@ const Users = () => {
   return (
     <>
       <ul>
-        { users.map(user => ( <User key={user.id} user={user} />) ) }
+        {users.map((user) => (
+          <User key={user.id} user={user} />
+        ))}
       </ul>
     </>
   )

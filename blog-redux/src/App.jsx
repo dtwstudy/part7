@@ -6,10 +6,24 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
-import { loadsBlogs, addBlog , updateLike ,removeBlog ,setBlog } from './reducers/blogReducer'
-import { loginIn, loginOut ,setUser } from './reducers/userReducer'
+import {
+  loadsBlogs,
+  addBlog,
+  updateLike,
+  removeBlog,
+  setBlog,
+} from './reducers/blogReducer'
+import { loginIn, loginOut, setUser } from './reducers/userReducer'
 import Users from './components/Users'
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+  useNavigate,
+} from 'react-router-dom'
+import DetailUser from './components/DetailsUser'
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
   const user = useSelector((state) => state.users)
@@ -145,12 +159,16 @@ const App = () => {
         <p>
           {user.username} logged in<button onClick={logOut}>logout</button>
         </p>
-
+        <Router>
+          <Routes>
+            <Route path="/" element={<Users />}></Route>
+            <Route path="/view/:id" element={<DetailUser />}></Route>
+          </Routes>
+        </Router>
         <Togglable buttonLabel="new blog" name="cancel" ref={blogFormRef}>
           <BlogForm onSubmit={onSubmit} />
         </Togglable>
         <button onClick={() => sortBlogs()}>sort</button>
-        <Users/>
         <BlogView />
       </>
     )
