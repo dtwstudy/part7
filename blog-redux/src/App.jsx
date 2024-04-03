@@ -6,8 +6,9 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
-import { loadsBlogs, addBlog , updateLike } from './reducers/blogReducer'
+import { loadsBlogs, addBlog , updateLike ,removeBlog ,setBlog } from './reducers/blogReducer'
 import { loginIn, loginOut ,setUser } from './reducers/userReducer'
+import Users from './components/Users'
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
@@ -77,9 +78,7 @@ const App = () => {
 
   const hadleOnDelete = (id) => {
     try {
-      const res = blogService.remove(id)
-      const newBlogs = blogs.filter((blog) => blog.id !== id)
-      // setBlogs(newBlogs)
+      dispatch(removeBlog(id))
       showMessage('Blog deleted ', 'successful')
     } catch (error) {
       console.log(error)
@@ -101,8 +100,7 @@ const App = () => {
 
       return 0
     })
-
-    //setBlogs(sortedBlogs)
+    dispatch(setBlog(sortedBlogs))
   }
 
   const logOut = () => {
@@ -152,6 +150,7 @@ const App = () => {
           <BlogForm onSubmit={onSubmit} />
         </Togglable>
         <button onClick={() => sortBlogs()}>sort</button>
+        <Users/>
         <BlogView />
       </>
     )

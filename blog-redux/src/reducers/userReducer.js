@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import userService from '../services/login'
 import blogService from '../services/blogs'
+
 const userSlice = createSlice({
   name: 'UserApp',
   initialState: [],

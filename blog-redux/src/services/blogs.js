@@ -22,7 +22,7 @@ const update = (id, newObject) => {
   const request = axios.put(`${ baseUrl }/${id}`, newObject)
   return request.then(response => response.data)
 }
-const remove = (id, newObject) => {
+const remove = (id) => {
   const config = {
     headers: { Authorization: token }
   }
