@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Togglable from '../components/Togglable'
-
+import {Link} from 'react-router-dom'
 
 const Blog = ({ blog, hadleOnLike, hadleOnDelete }) => {
   const blogStyle = {
@@ -24,7 +24,7 @@ const Blog = ({ blog, hadleOnLike, hadleOnDelete }) => {
   }
   return (
     <div style={blogStyle} className='blog'>
-      <p id='title' className='title'> {blog.title} {blog.author}</p>
+      <p id='title' className='title'> <Link to={`/blogs/${blog.id}`} >{blog.title}</Link>  {blog.author}</p>
       <Togglable buttonLabel="show" name="hide" ref={blogFormRef}>
         <p id='url'>{blog.url}  </p>
         <p id='like' className='like'> {blog.likes}</p> <button id="blike" onClick={() => UpdateLike(blog)}>like</button> 

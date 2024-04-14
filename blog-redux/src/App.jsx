@@ -6,6 +6,7 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import BlogDetails from './components/BlogDetails'
 import {
   loadsBlogs,
   addBlog,
@@ -155,21 +156,29 @@ const App = () => {
   if (user !== null) {
     return (
       <>
-        <Notification message={message.text} color={message.color} />
-        <p>
-          {user.username} logged in<button onClick={logOut}>logout</button>
-        </p>
         <Router>
+          <Notification message={message.text} color={message.color} />
+          <p>
+            <Link to="/blogs"> blogs </Link>
+            <Link to="/users"> users </Link>
+            {user.username} logged in<button onClick={logOut}>logout</button>
+          </p>
+
+          <Togglable buttonLabel="new blog" name="cancel" ref={blogFormRef}>
+            <BlogForm onSubmit={onSubmit} />
+          </Togglable>
+          <button onClick={() => sortBlogs()}>sort</button>
           <Routes>
-            <Route path="/" element={<Users />}></Route>
-            <Route path="/view/:id" element={<DetailUser />}></Route>
+            <Route path="/" element={<BlogView />}></Route>
+            <Route path="/blogs" element={<BlogView />}></Route>
+            <Route path="/users" element={<Users />}></Route>
+            <Route path="/users/:id" element={<DetailUser />}></Route>
+            <Route
+              path="/blogs/:id"
+              element={<BlogDetails/> }
+            ></Route>
           </Routes>
         </Router>
-        <Togglable buttonLabel="new blog" name="cancel" ref={blogFormRef}>
-          <BlogForm onSubmit={onSubmit} />
-        </Togglable>
-        <button onClick={() => sortBlogs()}>sort</button>
-        <BlogView />
       </>
     )
   } else {

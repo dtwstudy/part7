@@ -13,7 +13,7 @@ const User = ({ user }) => {
   return (
     <li>
       {' '}
-      <Link to={`/view/${user.id}`}>{user.username}</Link> blog created {user.blogs.length}
+      <Link to={`/users/${user.id}`}>{user.username}</Link> blog created {user.blogs.length}
     </li>
   )
 }
